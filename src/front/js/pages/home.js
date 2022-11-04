@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
@@ -7,6 +7,16 @@ export const Home = () => {
   const { store, actions } = useContext(Context);
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+
+  useEffect(() => {
+    actions.getVerified();
+  }, [store.token]);
+
+  useEffect(() => {
+    if (store.verifiedUser) {
+      navigate("/single");
+    }
+  }, [store.verifiedUser]);
 
   return (
     <div className="d-flex" style={{ height: "80vh" }}>
